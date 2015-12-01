@@ -7,18 +7,28 @@ const App = createClass({
       list: [],
     };
   },
+  handleDelete(index) {
+    const newList = this.state.list.slice();
+    newList.splice(index, 1);
+    this.setState({
+      list: newList,
+    });
+  },
   handleSubmit(e) {
     e.preventDefault();
-    const newList = this.state.list.concat(this.refs.newItemForm[0].value);
-    this.setState({
-      list: [...this.state.list, newList],
-    });
-    this.refs.newItemForm[0].value = '';
+    if (this.refs.newItemForm[0].value) {
+      const newList = this.state.list.concat(this.refs.newItemForm[0].value);
+      this.setState({
+        list: [...this.state.list, newList],
+      });
+      this.refs.newItemForm[0].value = '';
+    }
   },
   render() {
     const list = this.state.list.map((item, index) => {
       return (
         <li key={`${item}${index}`}>
+          <i onClick={this.handleDelete.bind(null, index)} className='close icon' />
           {item}
         </li>
       );
@@ -34,7 +44,9 @@ const App = createClass({
         </form>
         <div className='ui divider' />
         <h3>Items</h3>
-        {list}
+        <div className='ui list'>
+          {list}
+        </div>
       </div>
     );
   }
