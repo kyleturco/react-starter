@@ -11,7 +11,7 @@ const App = createClass({
     e.preventDefault();
     const newList = this.state.list.concat(this.refs.newItemForm[0].value);
     this.setState({
-      list: newList,
+      list: [...this.state.list, newList],
     });
     this.refs.newItemForm[0].value = '';
   },
@@ -32,6 +32,9 @@ const App = createClass({
           <input placeholder='New Item' />
           <button className='ui primary button'>Add Item</button>
         </form>
+        <div className='ui divider' />
+        <h3>Items</h3>
+        {list}
       </div>
     );
   }
