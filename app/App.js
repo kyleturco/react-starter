@@ -9,10 +9,20 @@ const App = createClass({
   },
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.refs.newItemForm[0].value);
+    const newList = this.state.list.concat(this.refs.newItemForm[0].value);
+    this.setState({
+      list: newList,
+    });
     this.refs.newItemForm[0].value = '';
   },
   render() {
+    const list = this.state.list.map((item, index) => {
+      return (
+        <li key={`${item}${index}`}>
+          {item}
+        </li>
+      );
+    });
     return (
       <div className='ui compact segment'>
         <h1>
